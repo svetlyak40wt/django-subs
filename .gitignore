@@ -1,0 +1,9 @@
+*.pyc
+.*.swp
+.installed.cfg
+bin
+develop-eggs
+dist
+django_subs.egg-info
+parts
+build
