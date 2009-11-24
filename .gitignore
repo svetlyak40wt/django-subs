@@ -7,3 +7,4 @@ dist
 django_subs.egg-info
 parts
 build
+.vim/ide.session
