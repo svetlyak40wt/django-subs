@@ -11,7 +11,7 @@ class Subscription( models.Model ):
 
     def save(self):
         if not self.id:
-            self.hash = md5.md5(self.email + settings.SECRET_KEY).hexdigest()
+            self.hash = md5.md5(self.subs_id + self.email + settings.SECRET_KEY).hexdigest()
         return super(Subscription, self).save()
 
     class Meta:
