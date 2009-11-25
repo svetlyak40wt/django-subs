@@ -1,8 +1,14 @@
+from pdb import set_trace
+
 from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
+from django.core import mail
 
 from django_subs.models import Subscription
-from django_subs.utils import subscribe, unsubscribe
+from django_subs.utils import subscribe, unsubscribe, send_message
+
+def clear():
+    mail.outbox = []
 
 class SimpleTests(TestCase):
     urls = 'django_subs.testurls'
@@ -53,4 +59,22 @@ class SimpleTests(TestCase):
         )
         self.assertRedirects(response, '/')
         self.assertEqual(0, Subscription.objects.count())
+
+
+    def testSendMessageUsesSimpleTemplate(self):
+        clear()
+        hash = subscribe('blah',  'art@example.com')
+        subscribe('blah',  'sasha@example.com')
+        subscribe('minor', 'peter@example.com')
+
+        send_message('blah', 'subject', 'Test message')
+
+        self.assertEqual(2, len(mail.outbox))
+        self.assertEqual(['art@example.com'], mail.outbox[0].to)
+        self.assertEqual(['sasha@example.com'], mail.outbox[1].to)
+
+        body = mail.outbox[0].body
+
+        self.assert_('Test message' in body)
+        self.assert_(hash in body)
 
