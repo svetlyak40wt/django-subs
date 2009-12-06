@@ -1,3 +1,0 @@
-{{ message }}
-
-To unsubscribe, follow this link: http://{{ site.domain }}{% url unsubscribe %}?hash={{ subscription.hash }}

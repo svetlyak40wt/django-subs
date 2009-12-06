@@ -23,7 +23,8 @@ def send_message(subs_id,
                  message,
                  from_email = '',
                  fail_silently = False,
-                 template = 'subs/email.txt'):
+                 template = 'subs/email.html',
+                 extra_context = {}):
     """Sends email to subscription list with given subs_id."""
 
     if not Site._meta.installed:
@@ -33,11 +34,14 @@ def send_message(subs_id,
 
     for subscription in get_subs(subs_id):
         try:
-            body = render_to_string(template, dict(
+            context = dict(
                 message = message,
                 site = site,
                 subscription = subscription,
-            ))
+            )
+            context.update(extra_context)
+
+            body = render_to_string(template, context)
             send_mail(subject, body, from_email, [subscription.email], fail_silently = fail_silently)
         except Exception:
             logging.getLogger('django_subs').exception("Can't send email to %s" % subscription.email)

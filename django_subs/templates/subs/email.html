@@ -1,0 +1,3 @@
+{% load i18n %}{{ message }}
+
+{% url unsubscribe as path %}{% blocktrans with site.domain as domain and subscription.hash as hash %}To unsubscribe, follow this link: http://{{ domain }}{{ path }}?hash={{ hash }}{% endblocktrans %}
