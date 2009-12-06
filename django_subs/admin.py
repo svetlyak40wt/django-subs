@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import *
+from django_subs.models import Subscription
 
-admin.site.register(TestModel)
+admin.site.register(Subscription)
 

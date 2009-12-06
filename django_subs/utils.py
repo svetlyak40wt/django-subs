@@ -40,7 +40,7 @@ def send_message(subs_id,
             ))
             send_mail(subject, body, from_email, [subscription.email], fail_silently = fail_silently)
         except Exception:
-            logging.getLogger('django_subs').exception("Can't send email to %s" % email)
+            logging.getLogger('django_subs').exception("Can't send email to %s" % subscription.email)
             if fail_silently == False:
                 raise
 
