@@ -1,1 +1,2 @@
-recursive-include src/templates *.html
+recursive-include django_subs/templates *.html
+recursive-include django_subs/locale *
